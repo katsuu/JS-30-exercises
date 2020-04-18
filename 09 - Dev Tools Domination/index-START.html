@@ -6,17 +6,28 @@
 </head>
 <body>
 
-  <p onClick="makeGreen()">×BREAK×DOWN×</p>
+  <p class="title" >×BREAK×DOWN×</p>
 
+  <style>
+    p {
+      color: black;
+      font-size: 18px;
+    }
+    .green {
+      color: #BADA55;
+      font-size: 50px;
+    }
+  </style>
   <script>
     const dogs = [{ name: 'Snickers', age: 2 }, { name: 'hugo', age: 8 }];
 
-    function makeGreen() {
-      const p = document.querySelector('p');
-      p.style.color = '#BADA55';
-      p.style.fontSize = '50px';
+    const makeGreen = (e) => {
+      e.currentTarget.classList.toggle('green')
     }
 
+    const title = document.querySelector('p.title')
+    title.addEventListener('click', makeGreen)
+    
     // Regular
 
     // Interpolated
