@@ -22,35 +22,78 @@
     const dogs = [{ name: 'Snickers', age: 2 }, { name: 'hugo', age: 8 }];
 
     const makeGreen = (e) => {
-      e.currentTarget.classList.toggle('green')
+      e.currentTarget.classList.toggle('green');
     }
 
-    const title = document.querySelector('p.title')
-    title.addEventListener('click', makeGreen)
+    const title = document.querySelector('p.title');
+    title.addEventListener('click', makeGreen);
     
     // Regular
+    console.log('Hello world');
 
     // Interpolated
+    const name = 'Kat'
+    // console.log('My name is %s.', name)
+    console.log(`My name is ${name}.`);
 
     // Styled
+    console.log(
+      "%cHere's some weird styling",
+      "color: green; font-size: 30px; text-shadow: 5px 5px 2px blue;");
 
     // warning!
+    console.warn('I am a warning');
 
     // Error :|
+    console.error('I am an error!');
 
     // Info
+    console.info("'Here\'s some info'");
 
     // Testing
+    console.assert(title.classList.contains('green') , "Nope, that's wrong!");
 
     // clearing
+    // console.clear();
 
     // Viewing DOM Elements
+    console.log(title)
+    console.dir(title)
 
     // Grouping together
+    dogs.forEach(dog => {
+      console.groupCollapsed(dog.name);
+      console.log(`This dog is called ${dog.name}.`);
+      console.log(`He is ${dog.age} years old.`);
+      console.groupEnd(dog.name)
+    })
 
     // counting
+    console.count('a');
+    console.count('a');
+    console.count('a');
+    console.count('b');
+    console.count('a');
+    console.count('b');
+    console.count('b');
 
-    // timing
+    // // timing
+    console.time('Fetch my github repos...')
+    
+    const url = 'https://api.github.com/users/katsuu/repos'
+    const fetchRepos = async () => {
+      const response = await fetch(url);
+      const data = await response.json();
+      return data;
+    }
+    
+    fetchRepos().then(data => {
+      console.log(data);
+      console.timeEnd('Fetch my github repos...');
+    });
+
+    // // table
+    console.table(dogs)
 
   </script>
 </body>
