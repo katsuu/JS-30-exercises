@@ -7,6 +7,22 @@
 </head>
 <body>
 <script>
+  
+  const keysPressed = []
+  const passcode = 'katrina'
+  
+  window.addEventListener('keydown', e => {
+    keysPressed.push(e.key)
+    // if (keysPressed.length === passcode.length + 1) keysPressed.shift()
+    keysPressed.splice(-passcode.length - 1, keysPressed.length - passcode.length)
+
+    if (keysPressed.join("") === passcode) {
+      console.log("DING DING DING!")
+      cornify_add();
+    }
+    console.log(keysPressed)
+  })
+
 </script>
 </body>
 </html>
