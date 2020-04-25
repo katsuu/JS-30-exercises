@@ -12,5 +12,21 @@ const togglePlay = (e) => {
   video.paused ? video.play() : video.pause();
 };
 
+const toggleIcon = (e) => {
+  const icon = e.currentTarget.paused ? "►" : "❚ ❚";
+  toggle.textContent = icon;
+};
+
+const skip = (e) => {
+  console.log(e.currentTarget.dataset.skip);
+  video.currentTime += parseFloat(e.currentTarget.dataset.skip);
+};
+
 // Hook up event listeners
+video.addEventListener("click", togglePlay);
+video.addEventListener("play", toggleIcon);
+video.addEventListener("pause", toggleIcon);
+
 toggle.addEventListener("click", togglePlay);
+
+skipButtons.forEach((skipButton) => skipButton.addEventListener("click", skip));
