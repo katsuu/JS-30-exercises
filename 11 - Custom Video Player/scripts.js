@@ -31,15 +31,25 @@ const handleProgress = (e) => {
   progressBar.style.flexBasis = `${percentage}%`;
 };
 
+const updateVidProg = (e) => {
+  const videoProgress =
+    (e.offsetX / e.currentTarget.offsetWidth) * video.duration;
+  video.currentTime = videoProgress;
+};
+
 // Hook up event listeners
 video.addEventListener("click", togglePlay);
 video.addEventListener("play", toggleIcon);
 video.addEventListener("pause", toggleIcon);
+video.addEventListener("timeupdate", handleProgress);
 
 toggle.addEventListener("click", togglePlay);
-
-progress.addEventListener("click", handleProgress);
-
 skipButtons.forEach((skipButton) => skipButton.addEventListener("click", skip));
 ranges.forEach((range) => range.addEventListener("click", handleRange));
 ranges.forEach((range) => range.addEventListener("mousemove", handleRange));
+
+let mousedown = false;
+progress.addEventListener("click", updateVidProg);
+progress.addEventListener("mousemove", (e) => mousedown && updateVidProg(e));
+progress.addEventListener("mousedown", () => (mousedown = true));
+progress.addEventListener("mouseup", () => (mousedown = false));
