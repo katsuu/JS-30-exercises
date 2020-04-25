@@ -22,6 +22,15 @@ const skip = (e) => {
   video.currentTime += parseFloat(e.currentTarget.dataset.skip);
 };
 
+const handleRange = (e) => {
+  video[e.currentTarget.name] = e.currentTarget.value;
+};
+
+const handleProgress = (e) => {
+  const percentage = (video.currentTime / video.duration) * 100;
+  progressBar.style.flexBasis = `${percentage}%`;
+};
+
 // Hook up event listeners
 video.addEventListener("click", togglePlay);
 video.addEventListener("play", toggleIcon);
@@ -29,4 +38,8 @@ video.addEventListener("pause", toggleIcon);
 
 toggle.addEventListener("click", togglePlay);
 
+progress.addEventListener("click", handleProgress);
+
 skipButtons.forEach((skipButton) => skipButton.addEventListener("click", skip));
+ranges.forEach((range) => range.addEventListener("click", handleRange));
+ranges.forEach((range) => range.addEventListener("mousemove", handleRange));
