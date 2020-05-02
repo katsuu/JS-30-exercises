@@ -17,4 +17,13 @@ const getVideo = () => {
     });
 };
 
+const mirrorToCanvas = () => {
+  const { videoWidth: width, videoHeight: height } = video;
+  [canvas.width, canvas.height] = [width, height];
+
+  return setInterval(() => {
+    ctx.drawImage(video, 0, 0, width, height); // Start at [0,0] and paint width and height of video
+  }, 16); // Every 16 milliseconds
+};
+
 getVideo();
