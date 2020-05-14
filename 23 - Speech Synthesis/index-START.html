@@ -29,12 +29,53 @@
     </div>
 
 <script>
+  // Create new speech - what Voiceinator will say - requires voice, text, pitch, and rate
   const msg = new SpeechSynthesisUtterance();
+  // speechSynthesis is another global variable
+  // call .speak on it and pass it an utterance to speak!
+  // This should contain the different voices
   let voices = [];
   const voicesDropdown = document.querySelector('[name="voice"]');
   const options = document.querySelectorAll('[type="range"], [name="text"]');
   const speakButton = document.querySelector('#speak');
   const stopButton = document.querySelector('#stop');
+  msg.text = document.querySelector('[name="text"]').value;
+
+  function populateVoices() {
+    // Can't be called on page load as speech synthesis must fire voiceschanged first
+    voices = this.getVoices();
+    voicesDropdown.innerHTML = voices
+      .filter(voice => voice.lang.includes('en'))
+      .map(voice => `<option value="${voice.name}">${voice.name} (${voice.lang})</option>`)
+      .join('');
+  }
+
+  function setVoice() {
+    msg.voice = voices.find(voice => voice.name === this.value)
+    toggle();
+  }
+
+  function toggle(startOver = true) {
+    // toggle(false) will just cancel speech
+    speechSynthesis.cancel();
+    if (startOver) {
+      speechSynthesis.speak(msg);
+    }
+  }
+
+  function setOption() {
+    console.log(this.name, this.value);
+    msg[this.name] = this.value;
+    toggle();
+  }
+
+  // Event Listeners
+  speechSynthesis.addEventListener('voiceschanged', populateVoices);
+  voicesDropdown.addEventListener('change', setVoice);
+  options.forEach(option => option.addEventListener('change', setOption))
+  speakButton.addEventListener('click', () => toggle())
+  stopButton.addEventListener('click', () => toggle(false))
+
 </script>
 
 </body>
