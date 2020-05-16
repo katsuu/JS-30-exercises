@@ -42,6 +42,31 @@
 
 <button></button>
 <script>
+  // Note: Click is triggered on div, wrapped divs and body. This is called 'bubbling'
+  // Ripples up document and triggers event listener for wrapping divs
+  // Modern browser does a 'capture' of document from top to bottom of what was 'clicked', 
+  // then bubble starts to bubble up to trigger the events as you go up
+  
+  const divs = document.querySelectorAll('div');
+  const btn = document.querySelector('button');
+
+  function logText(e) {
+    console.log(this.classList.value);
+    e.stopPropagation(); // stop bubbling - doesn't trigger on parent divs!
+  }
+  
+  // Third argument is an options object
+  // Capture set to true so FUNCTION triggered upon capture down, not bubble up
+  divs.forEach(div => div.addEventListener('click', logText, {
+    capture: false, // stops bubbling if set to true and captures inwards
+    once: true // unbinds div's event listener like: div.removeEventListener('click', logText). Helpful for buttons.
+  }));
+
+  btn.addEventListener('click', () => {
+    console.log('Clicked!')
+  }, {
+    once: true
+  })
 
 </script>
 </body>
