@@ -129,6 +129,10 @@
     justify-content: center;
   }
 
+  /* .cool > li > a {
+    margin: 0;
+  } */
+
   .dropdown {
     opacity: 0;
     position: absolute;
@@ -141,6 +145,8 @@
     will-change: opacity;
     display: none;
   }
+
+  /* Can't take off opacity0 and displaynone same time, must be in steps */
 
   .trigger-enter .dropdown {
     display: block;
@@ -220,6 +226,37 @@
 </style>
 
 <script>
+  const tabs = document.querySelectorAll('.cool > li');
+  const background = document.querySelector('.dropdownBackground');
+  const nav = document.querySelector('.top');
+
+  function handleEnter() {
+    this.classList.add('trigger-enter');
+    setTimeout(() => this.classList.add('trigger-enter-active'), 150);
+    background.classList.add('open');
+
+    const dropdown = this.querySelector('.dropdown');
+    const dropdownCoords = dropdown.getBoundingClientRect();
+    console.log(dropdownCoords)
+
+    const coords = {
+      height: dropdownCoords.height,
+      width: dropdownCoords.width
+    }
+
+    background.style.setProperty('height', `${coords.height}px`);
+    background.style.setProperty('width', `${coords.width}px`);
+
+  }
+
+  function handleLeave() {
+    this.classList.remove('trigger-enter', 'trigger-enter-active');
+    background.classList.remove('open');
+  }
+
+  tabs.forEach(tab => tab.addEventListener('mouseenter', handleEnter));
+  tabs.forEach(tab => tab.addEventListener('mouseleave', handleLeave));
+
 </script>
 
 </body>
